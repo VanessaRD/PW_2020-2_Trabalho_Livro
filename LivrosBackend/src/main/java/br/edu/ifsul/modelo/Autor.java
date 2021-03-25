@@ -31,12 +31,14 @@ public class Autor implements Serializable {
     @SequenceGenerator(name = "seq_autor", sequenceName = "seq_autor_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_autor", strategy = GenerationType.SEQUENCE)
     private Integer id;
+    
     @NotBlank(message = "O nome não pode ser em branco")
     @Length(max = 50, message = "O nome não pode ter mais que {max} caracteres")
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
+    
     @NotBlank(message = "A bibliografia não pode ser em branco")
-    @Column(name = "bibliografia", nullable = false)
+    @Column(name = "bibliografia", columnDefinition = "text" , nullable = false)
     private String bibliografia;
 
     public Autor() {

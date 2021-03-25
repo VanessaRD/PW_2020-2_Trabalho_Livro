@@ -29,10 +29,12 @@ public class Idioma implements Serializable {
     @SequenceGenerator(name = "seq_idioma", sequenceName = "seq_idioma_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_idioma", strategy = GenerationType.SEQUENCE)
     private Integer id;
+    
     @NotBlank(message = "O nome não pode ser em branco")
     @Length(max = 50, message = "O nome não pode ter mais que {max} caracteres")
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
+    
     @NotBlank(message = "A sigla não pode ser em branco")
     @Length(max = 2, message = "A sigla não pode ter mais que {max} caracteres")
     @Column(name = "sigla", nullable = false, length = 2)

@@ -32,28 +32,35 @@ public class Livro extends LivroBasico implements Serializable {
     @Length(max = 40, message = "O codigo de Barras não deve ter mais que {max} caracteres")
     @Column(name = "codigoBarras", length = 40, nullable = false)
     private String codigoBarras;
+
     @NotNull(message = "O numero de Paginas deve ser informada")
     @Length(max = 10, message = "O numero de Paginas não deve ter mais que {max} caracteres")
     @Column(name = "numeroPaginas", nullable = false, length = 10)
     private Integer numeroPaginas;
+
     @NotNull(message = "O campo ativo deve ser informado")
     @Column(name = "ativo", nullable = false)
     private boolean ativo;
+
     @Temporal(TemporalType.DATE)
     @NotNull(message = "A data de cadastro deve ser informada")
     @Column(name = "dataCadastro", nullable = false)
     private Calendar dataCadastro;
+
     @NotNull(message = "O valor deve ser informada")
     @Column(name = "valor", nullable = false, columnDefinition = "numeric(4,2)")
     private double valor;
+
     @NotNull(message = "O formato deve ser informado")
     @ManyToOne
     @JoinColumn(name = "formato_id", referencedColumnName = "id", nullable = false)
     private Formato formato;
+
     @NotNull(message = "O idioma deve ser informado")
     @ManyToOne
     @JoinColumn(name = "idioma_id", referencedColumnName = "id", nullable = false)
     private Idioma idioma;
+
     @NotNull(message = "O catalogo deve ser informado")
     @ManyToOne
     @JoinColumn(name = "catalogo_id", referencedColumnName = "id", nullable = false)
@@ -150,6 +157,5 @@ public class Livro extends LivroBasico implements Serializable {
         }
         return true;
     }
-    
-    
+
 }

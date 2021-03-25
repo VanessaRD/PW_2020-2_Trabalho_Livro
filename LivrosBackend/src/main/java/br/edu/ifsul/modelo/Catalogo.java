@@ -6,6 +6,7 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -32,14 +34,20 @@ public class Catalogo implements Serializable {
     @SequenceGenerator(name = "seq_catalogo", sequenceName = "seq_catalogo_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_catalogo", strategy = GenerationType.SEQUENCE)
     private Integer id;
+
     @NotBlank(message = "O nome não pode ser em branco")
     @Length(max = 50, message = "O nome não pode ter mais que {max} caracteres")
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
+
     @NotBlank(message = "A descrição não pode ser em branco")
     @Length(max = 80, message = "A descrição não pode ter mais que {max} caracteres")
-    @Column(name = "descricao", nullable = false, length = 80)
+    @Column(name = "descricao", columnDefinition = "text", nullable = false, length = 80)
     private String descricao;
+
+    @OneToMany(mappedBy = "catalogo")
+    private List<Livro> livros;
+
     @NotNull(message = "A livraria deve ser informado")
     @ManyToOne
     @JoinColumn(name = "livraria_id", referencedColumnName = "id", nullable = false)
@@ -80,6 +88,14 @@ public class Catalogo implements Serializable {
         this.livraria = livraria;
     }
 
+    public List<Livro> getLivros() {
+        return livros;
+    }
+
+    public void setLivros(List<Livro> livros) {
+        this.livros = livros;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -104,7 +120,5 @@ public class Catalogo implements Serializable {
         }
         return true;
     }
-
-    
 
 }

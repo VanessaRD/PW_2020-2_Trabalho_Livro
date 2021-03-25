@@ -41,22 +41,27 @@ public class LivroBasico implements Serializable {
     @Length(max = 30, message = "O ISBN não deve ter mais que {max} caracteres")
     @Column(name = "ISBN", length = 30, nullable = false)
     private String ISBN;
+
     @NotBlank(message = "O titulo não pode ser em branco")
     @Length(max = 50, message = "O titulo não pode ter mais que {max} caracteres")
     @Column(name = "titulo", nullable = false, length = 50)
     private String titulo;
+
     @NotBlank(message = "O resumo não pode ser em branco")
     @Length(max = 500, message = "O resumo não pode ter mais que {max} caracteres")
-    @Column(name = "resumo", nullable = false, length = 500)
+    @Column(name = "resumo", columnDefinition = "text", nullable = false, length = 500)
     private String resumo;
+
     @NotBlank(message = "A editora não pode ser em branco")
     @Length(max = 50, message = "A editora não pode ter mais que {max} caracteres")
     @Column(name = "editora", nullable = false, length = 50)
     private String editora;
+
     @Temporal(TemporalType.DATE)
     @NotNull(message = "A data da publicação deve ser informada")
     @Column(name = "dataPublicacao", nullable = false)
     private Calendar dataPublicacao;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "autor_livro",
             joinColumns

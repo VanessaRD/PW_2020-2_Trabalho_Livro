@@ -6,11 +6,13 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -28,14 +30,19 @@ public class Livraria implements Serializable {
     @SequenceGenerator(name = "seq_livraria", sequenceName = "seq_livraria_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_livraria", strategy = GenerationType.SEQUENCE)
     private Integer id;
+
     @NotBlank(message = "O nome não pode ser em branco")
     @Length(max = 50, message = "O nome não pode ter mais que {max} caracteres")
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
+
     @NotBlank(message = "O site não pode ser em branco")
     @Length(max = 50, message = "O site não pode ter mais que {max} caracteres")
     @Column(name = "site", nullable = false, length = 50)
     private String site;
+
+    @OneToMany(mappedBy = "livraria")
+    private List<Catalogo> catalogo;
 
     public Livraria() {
     }
@@ -46,7 +53,7 @@ public class Livraria implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }   
+    }
 
     public String getNome() {
         return nome;
@@ -62,6 +69,14 @@ public class Livraria implements Serializable {
 
     public void setSite(String site) {
         this.site = site;
+    }
+
+    public List<Catalogo> getCatalogo() {
+        return catalogo;
+    }
+
+    public void setCatalogo(List<Catalogo> catalogo) {
+        this.catalogo = catalogo;
     }
 
     @Override
