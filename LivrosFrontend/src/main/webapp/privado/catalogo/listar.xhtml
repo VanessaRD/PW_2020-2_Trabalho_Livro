@@ -17,8 +17,48 @@
                                  update="formEdicao"
                                  process="@this"
                                  oncomplete="PF('dlg').show();"/>
+                <div align="center">
+                    <p:panelGrid columns="11">
+                        <p:outputLabel value="Ordem:"/>
+                        <p:selectOneMenu value="#{controleCatalogo.dao.ordemAtual}"
+                                         converter="#{controleCatalogo.dao.converterOrdem}">
+                            <f:selectItems value="#{controleCatalogo.dao.listaOrdem}"
+                                           var="ord" itemValue="#{ord.atributo}"/>
+                            <p:ajax update="listagem"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Filtro:"/>
+                        <p:inputText value="#{controleCatalogo.dao.filtro}">
+
+                        </p:inputText>
+                        <p:commandButton value="Filtrar" update="listagem"/>
+                        <p:outputLabel value="Máximo de objetos"/>
+                        <p:selectOneMenu value="#{controleCatalogo.dao.maximoObjetos}">
+                            <f:selectItem itemValue="3" itemLabel="3"/>
+                            <f:selectItem itemValue="5" itemLabel="5"/>
+                            <f:selectItem itemValue="10" itemLabel="10"/>
+                            <f:selectItem itemValue="20" itemLabel="20"/>
+                            <f:selectItem itemValue="50" itemLabel="50"/>
+                            <p:ajax update="listagem"/>
+                        </p:selectOneMenu>
+                        <p:commandButton action="#{controleCatalogo.dao.primeiro()}"
+                                         title="Primeiro" update="listagem"
+                                         icon="pi pi-step-backward"/>
+                        <p:commandButton action="#{controleCatalogo.dao.anterior()}"
+                                         title="Anterior" update="listagem"
+                                         icon="pi pi-chevron-left"/>  
+                        <p:commandButton action="#{controleCatalogo.dao.proximo()}"
+                                         title="Proximo" update="listagem"
+                                         icon="pi pi-chevron-right"/>                         
+                        <p:commandButton action="#{controleCatalogo.dao.ultimo()}"
+                                         title="Ultimo" update="listagem"
+                                         icon="pi pi-step-forward"/>                        
+                    </p:panelGrid>
+                </div>
                 <p:dataTable value="#{controleCatalogo.dao.listaObjetos}" var="obj"
                              id="listagem">
+                    <f:facet name="footer">
+                        <p:outputLabel value="#{controleCatalogo.dao.mensagemNavegacao}"/>
+                    </f:facet>
                     <p:column headerText="ID">
                         <p:outputLabel value="#{obj.id}"/>
                     </p:column>
@@ -63,7 +103,7 @@
                             <p:inputText id="txtNome" value="#{controleCatalogo.objeto.nome}"
                                          size="50" maxlength="50"
                                          placeholder="Obrigatório"/>
-                             <p:outputLabel value="Descrição" for="txtDescricao"/>
+                            <p:outputLabel value="Descrição" for="txtDescricao"/>
                             <p:inputText id="txtDescricao" value="#{controleCatalogo.objeto.descricao}"
                                          size="50" maxlength="50"
                                          placeholder="Obrigatório"/>
@@ -78,9 +118,9 @@
                                 <f:selectItems value="#{controleCatalogo.daoLivraria.listaTodos}"
                                                var="est" itemLabel="#{est.nome}"/>
                             </p:selectOneMenu>
-                            
+
                             <p:commandButton value="Ir para criação de Livrarias" action="#{controleLivraria.listar()}" ajax="false" oncomplete="PF('dlg').hide();"/>
-                        
+
                         </p:panelGrid>
                     </div>
                     <p:panel>
