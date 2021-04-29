@@ -12,13 +12,14 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
 /**
  *
  * @author Vanessa Rossi D.
  */
-@Named(value = "converterCalendar")
+@FacesConverter(value = "converterCalendar")
 @RequestScoped
 public class ConverterCalendar implements Serializable, Converter{
     

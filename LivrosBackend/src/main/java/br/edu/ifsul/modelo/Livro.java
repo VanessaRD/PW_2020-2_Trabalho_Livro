@@ -34,7 +34,6 @@ public class Livro extends LivroBasico implements Serializable {
     private String codigoBarras;
 
     @NotNull(message = "O numero de Paginas deve ser informada")
-    @Length(max = 10, message = "O numero de Paginas não deve ter mais que {max} caracteres")
     @Column(name = "numeroPaginas", nullable = false, length = 10)
     private Integer numeroPaginas;
 
@@ -48,7 +47,7 @@ public class Livro extends LivroBasico implements Serializable {
     private Calendar dataCadastro;
 
     @NotNull(message = "O valor deve ser informada")
-    @Column(name = "valor", nullable = false, columnDefinition = "numeric(4,2)")
+    @Column(name = "valor", nullable = false, columnDefinition = "numeric(8,2)")
     private double valor;
 
     @NotNull(message = "O formato deve ser informado")

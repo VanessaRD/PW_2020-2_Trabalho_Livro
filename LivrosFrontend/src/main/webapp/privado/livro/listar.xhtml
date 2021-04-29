@@ -97,13 +97,13 @@
                     </p:column>  
                     <p:column headerText="Ações">
                         <div align="center">
-                            <p:commandButton actionListener="#{controleLivro.alterar(obj.codigoBarras)}"
+                            <p:commandButton actionListener="#{controleLivro.alterar(obj.ISBN)}"
                                              icon="pi pi-pencil"
                                              title="Editar"
                                              update="formEdicao"
                                              process="@this"
                                              oncomplete="PF('dlg').show();"/>
-                            <p:commandButton actionListener="#{controleLivro.excluir(obj.codigoBarras)}"
+                            <p:commandButton actionListener="#{controleLivro.excluir(obj.ISBN)}"
                                              icon="pi pi-trash"
                                              update="@form"
                                              process="@this"
@@ -126,9 +126,10 @@
                                      style="border:0px none; background-color:transparent;">
 
                             <p:column>
-                                <p:outputLabel value="Codigo de Barras"/>
-                                <p:inputText validator="#{controleLivro.objeto.codigoBarras}"
-                                             size="20" readonly="true"  style="width: 95%;" />
+                                <p:outputLabel value="ISBN" for="txtISBN"/> <br/>
+                                <p:inputText id="txtISBN" value="#{controleLivro.objeto.ISBN}"
+                                             size="20" maxlength="30" style="width: 95%;"  required="true" />
+                                
                             </p:column>
 
                             <p:column>
@@ -136,9 +137,10 @@
                                 <p:inputText id="txtNumeroPaginas" value="#{controleLivro.objeto.numeroPaginas}" required="true"/>
                             </p:column>
                             <p:column>
-                                <p:outputLabel value="ISBN" for="txtISBN"/> <br/>
-                                <p:inputText id="txtISBN" value="#{controleLivro.objeto.ISBN}"
-                                             size="35" maxlength="30" style="width: 95%;"  required="true" />
+                                
+                                <p:outputLabel value="Codigo de Barras"/>
+                                <p:inputText value="#{controleLivro.objeto.codigoBarras}"
+                                             size="35" maxlength="30" required="true" style="width: 95%;" />
                             </p:column>
 
                             <p:column>
@@ -155,7 +157,7 @@
                             <p:column>
                                 <p:outputLabel value="Valor" for="txtValor"/> <br/>
                                 <p:inputNumber id="txtValor" value="#{controleLivro.objeto.valor}"
-                                               size="20" maxlength="20" style="width: 95%;"  required="true" />
+                                               size="20" maxlength="10" style="width: 95%;"  required="true" />
                                 <br/>
 
                                 <p:outputLabel value="Ativo" for="ativo"/>
@@ -170,18 +172,22 @@
 
                             </p:column>
                             <p:column>
-                                <p:outputLabel for="dataCadastro" value="Data de Cadastro"/> 
-                                <p:datePicker id="dataCadastro" value="#{controleLivro.objeto.dataCadastro}" 
-                                              style="width: 95%;" pattern="dd/MM/yyyy"  required="true" >
 
-                                </p:datePicker>
+                                <p:outputLabel for="dataCadastro" value="Data de Cadastro"/> 
+                                <p:calendar id="dataCadastro" value="#{controleLivro.objeto.dataCadastro}"
+                                            pattern="dd/MM/yyyy" required="true" size="10" style="width: 95%;">
+                                    <f:converter converterId="converterCalendar"/>
+                                </p:calendar>
+
                             </p:column>
                             <p:column>
-                                <p:outputLabel for="dataPublicacao" value="Data de Publicação"/>
-                                <p:datePicker id="dataPublicacao" value="#{controleLivro.objeto.dataPublicacao}" 
-                                              style="width: 95%;" pattern="dd/MM/yyyy"  required="true" >
 
-                                </p:datePicker>
+                                <p:outputLabel for="dataPublicacao" value="Data de Publicação"/> 
+                                <p:calendar id="dataPublicacao" value="#{controleLivro.objeto.dataPublicacao}"
+                                            pattern="dd/MM/yyyy" required="true" size="10" style="width: 95%;">
+                                    <f:converter converterId="converterCalendar"/>
+                                </p:calendar>
+
                             </p:column>
                             <p:column>
                                 <p:outputLabel value="Formato" for="selectFormato"/> 

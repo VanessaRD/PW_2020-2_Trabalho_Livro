@@ -8,6 +8,7 @@ package br.edu.ifsul.dao;
 import br.edu.ifsul.conversores.ConverterOrdem;
 import br.edu.ifsul.modelo.Autor;
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.Stateful;
 
 /**
@@ -29,5 +30,9 @@ public class AutorDAO<TIPO> extends DAOGenerico<Autor> implements Serializable {
         // inicializar o conversor das ordens
         converterOrdem = new ConverterOrdem();
         converterOrdem.setListaOrdem(listaOrdem);
+    }
+    public List<Autor> getListaObjetosCompleta() {
+        String jpql = "select distinct t from Autor t join fetch t.autor order by t.id";
+        return em.createQuery(jpql).getResultList();
     }
 }

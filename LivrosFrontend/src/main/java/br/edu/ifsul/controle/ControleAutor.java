@@ -8,7 +8,11 @@ package br.edu.ifsul.controle;
 import br.edu.ifsul.dao.AutorDAO;
 import br.edu.ifsul.modelo.Autor;
 import br.edu.ifsul.util.Util;
+import br.edu.ifsul.util.UtilRelatorios;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -27,6 +31,23 @@ public class ControleAutor implements Serializable {
 
     public ControleAutor() {
 
+    }
+    
+    public void imprimeAutores(){
+        HashMap parametros = new HashMap();
+        UtilRelatorios.imprimeRelatorio("relatoriosAutores", parametros, dao.getListaObjetosCompleta());
+    }
+    
+    public void imprimeAutor(Object id) {
+        try {
+            objeto = dao.getObjectByID(id);
+            List<Autor> lista = new ArrayList<>();
+            lista.add(objeto);
+            HashMap parametros = new HashMap();
+            UtilRelatorios.imprimeRelatorio("relatoriosAutores", parametros, lista);
+        } catch (Exception e) {
+            Util.mensagemInformacao("Erro ao imprimir: " + Util.getMensagemErro(e));
+        }
     }
 
     public String listar() {
