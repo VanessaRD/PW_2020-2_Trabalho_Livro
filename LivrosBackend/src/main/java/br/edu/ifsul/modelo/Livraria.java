@@ -6,9 +6,12 @@
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,10 +44,20 @@ public class Livraria implements Serializable {
     @Column(name = "site", nullable = false, length = 50)
     private String site;
 
-    @OneToMany(mappedBy = "livraria")
-    private List<Catalogo> catalogo;
+    @OneToMany(mappedBy = "livraria", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Catalogo> catalogos = new ArrayList<>();
 
     public Livraria() {
+    }
+
+    public void adicionarCatalogo(Catalogo obj) {
+        obj.setLivraria(this);
+        this.catalogos.add(obj);
+    }
+
+    public void removerCatalogo(int index) {
+        this.catalogos.remove(index);
     }
 
     public Integer getId() {
@@ -71,12 +84,12 @@ public class Livraria implements Serializable {
         this.site = site;
     }
 
-    public List<Catalogo> getCatalogo() {
-        return catalogo;
+    public List<Catalogo> getCatalogos() {
+        return catalogos;
     }
 
-    public void setCatalogo(List<Catalogo> catalogo) {
-        this.catalogo = catalogo;
+    public void setCatalogos(List<Catalogo> catalogos) {
+        this.catalogos = catalogos;
     }
 
     @Override

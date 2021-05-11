@@ -7,8 +7,10 @@ package br.edu.ifsul.controle;
 
 import br.edu.ifsul.dao.CatalogoDAO;
 import br.edu.ifsul.dao.LivrariaDAO;
+import br.edu.ifsul.dao.LivroDAO;
 import br.edu.ifsul.modelo.Catalogo;
 import br.edu.ifsul.modelo.Livraria;
+import br.edu.ifsul.modelo.Livro;
 import br.edu.ifsul.util.Util;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -26,11 +28,31 @@ public class ControleCatalogo implements Serializable {
     @EJB
     private CatalogoDAO<Catalogo> dao;
     private Catalogo objeto;
+    
     @EJB
     private LivrariaDAO<Livraria> daoLivraria;
+    
+    @EJB
+    private LivroDAO<Livro> daoLivro;
+    private Livro livro;
+    private int abaAtiva;
 
     public ControleCatalogo() {
 
+    }
+    
+    public void removerLivro(Livro obj) {
+        objeto.getLivros().remove(obj);
+        Util.mensagemInformacao("Livro removido com sucesso!");
+    }
+
+    public void adicionarLivro() {
+        if (!objeto.getLivros().contains(livro)) {
+            objeto.getLivros().add(livro);
+            Util.mensagemInformacao("Livro adicionado com sucesso!");
+        } else {
+            Util.mensagemErro("Catalogo já possui este livro");
+        }
     }
 
     public String listar() {
@@ -39,11 +61,13 @@ public class ControleCatalogo implements Serializable {
 
     public void novo() {
         objeto = new Catalogo();
+        abaAtiva = 0;
     }
 
     public void alterar(Object id) {
         try {
             objeto = dao.getObjectByID(id);
+            abaAtiva = 0;
         } catch (Exception e) {
             Util.mensagemInformacao("Erro ao recuperar objeto: " + Util.getMensagemErro(e));
         }
@@ -86,6 +110,30 @@ public class ControleCatalogo implements Serializable {
 
     public void setObjeto(Catalogo objeto) {
         this.objeto = objeto;
+    }
+
+    public LivroDAO<Livro> getDaoLivro() {
+        return daoLivro;
+    }
+
+    public void setDaoLivro(LivroDAO<Livro> daoLivro) {
+        this.daoLivro = daoLivro;
+    }
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
+
+    public int getAbaAtiva() {
+        return abaAtiva;
+    }
+
+    public void setAbaAtiva(int abaAtiva) {
+        this.abaAtiva = abaAtiva;
     }
 
     public LivrariaDAO<Livraria> getDaoLivraria() {

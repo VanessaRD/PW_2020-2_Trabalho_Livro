@@ -5,7 +5,9 @@
  */
 package br.edu.ifsul.controle;
 
+import br.edu.ifsul.dao.CatalogoDAO;
 import br.edu.ifsul.dao.LivrariaDAO;
+import br.edu.ifsul.modelo.Catalogo;
 import br.edu.ifsul.modelo.Livraria;
 import br.edu.ifsul.util.Util;
 import java.io.Serializable;
@@ -25,8 +27,54 @@ public class ControleLivraria implements Serializable {
     private LivrariaDAO<Livraria> dao;
     private Livraria objeto;
 
+    /*@EJB
+    private CatalogoDAO<Catalogo> daoCatalogo;
+    private Catalogo catalogo;
+    private int abaAtiva;*/
+
+    private Catalogo catalogo;
+    private Boolean novoCatalogo;
+    private int abaAtiva;
+    
     public ControleLivraria() {
 
+    }
+/*
+    public void removerCatalogo(Catalogo obj) {
+        objeto.getCatalogos().remove(obj);
+        Util.mensagemInformacao("Catalogo removido com sucesso!");
+    }
+
+    public void adicionarCatalogo() {
+        if (!objeto.getCatalogos().contains(catalogo)) {
+            objeto.getCatalogos().add(catalogo);
+            Util.mensagemInformacao("Catalogo adicionado com sucesso!");
+        } else {
+            Util.mensagemErro("Livraria já possui este catalogo");
+        }
+    }*/
+
+    
+     public void novoCatalogo(){
+        catalogo = new Catalogo();
+        novoCatalogo = true;        
+    }
+    
+    public void alterarCatalogo(int index){
+        catalogo = objeto.getCatalogos().get(index);
+        novoCatalogo = false;
+    }
+    
+    public void salvarCatalogo(){
+        if (novoCatalogo){
+            objeto.adicionarCatalogo(catalogo);
+        }
+        Util.mensagemInformacao("Catalogo adicionado ou alterado com sucesso!");
+    }
+    
+    public void removerCatalogo(int index){
+        objeto.removerCatalogo(index);
+        Util.mensagemInformacao("Catalogo removido com sucesso!");
     }
 
     public String listar() {
@@ -35,11 +83,13 @@ public class ControleLivraria implements Serializable {
 
     public void novo() {
         objeto = new Livraria();
+        abaAtiva = 0;
     }
 
     public void alterar(Object id) {
         try {
             objeto = dao.getObjectByID(id);
+            abaAtiva = 0;
         } catch (Exception e) {
             Util.mensagemInformacao("Erro ao recuperar objeto: " + Util.getMensagemErro(e));
         }
@@ -82,6 +132,30 @@ public class ControleLivraria implements Serializable {
 
     public void setObjeto(Livraria objeto) {
         this.objeto = objeto;
+    }
+
+    public Catalogo getCatalogo() {
+        return catalogo;
+    }
+
+    public void setCatalogo(Catalogo catalogo) {
+        this.catalogo = catalogo;
+    }
+
+    public Boolean getNovoCatalogo() {
+        return novoCatalogo;
+    }
+
+    public void setNovoCatalogo(Boolean novoCatalogo) {
+        this.novoCatalogo = novoCatalogo;
+    }
+
+    public int getAbaAtiva() {
+        return abaAtiva;
+    }
+
+    public void setAbaAtiva(int abaAtiva) {
+        this.abaAtiva = abaAtiva;
     }
 
 }

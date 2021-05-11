@@ -63,12 +63,12 @@ public class LivroBasico implements Serializable {
     private Calendar dataPublicacao;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "autor_livro",
+    @JoinTable(name = "autores",
             joinColumns
             = @JoinColumn(name = "ISBN", referencedColumnName = "ISBN",
                     nullable = false),
             inverseJoinColumns
-            = @JoinColumn(name = "id_Autor", referencedColumnName = "id", nullable = false))
+            = @JoinColumn(name = "Autor", referencedColumnName = "id", nullable = false))
     private Set<Autor> autores = new HashSet<>();
 
     public LivroBasico() {

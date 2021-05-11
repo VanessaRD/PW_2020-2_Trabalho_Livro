@@ -5,10 +5,12 @@
  */
 package br.edu.ifsul.controle;
 
+import br.edu.ifsul.dao.AutorDAO;
 import br.edu.ifsul.dao.CatalogoDAO;
 import br.edu.ifsul.dao.FormatoDAO;
 import br.edu.ifsul.dao.IdiomaDAO;
 import br.edu.ifsul.dao.LivroDAO;
+import br.edu.ifsul.modelo.Autor;
 import br.edu.ifsul.modelo.Catalogo;
 import br.edu.ifsul.modelo.Formato;
 import br.edu.ifsul.modelo.Idioma;
@@ -26,6 +28,7 @@ import javax.inject.Named;
 @Named(value = "controleLivro")
 @ViewScoped
 public class ControleLivro implements Serializable {
+
     @EJB
     private LivroDAO<Livro> dao;
     private Livro objeto;
@@ -36,46 +39,67 @@ public class ControleLivro implements Serializable {
     private IdiomaDAO<Idioma> daoIdioma;
     @EJB
     private CatalogoDAO<Catalogo> daoCatalogo;
-    
-    public ControleLivro(){
-        
+
+    @EJB
+    private AutorDAO<Autor> daoAutor;
+    private Autor autor;
+    private int abaAtiva;
+
+    public ControleLivro() {
+
     }
-    
-    public String listar(){
+
+    public void removerAutor(Autor obj) {
+        objeto.getAutores().remove(obj);
+        Util.mensagemInformacao("Autor removido com sucesso!");
+    }
+
+    public void adicionarAutor() {
+        if (!objeto.getAutores().contains(autor)) {
+            objeto.getAutores().add(autor);
+            Util.mensagemInformacao("Autor adicionado com sucesso!");
+        } else {
+            Util.mensagemErro("Livro já possui este autor");
+        }
+    }
+
+    public String listar() {
         return "/privado/livro/listar?faces-redirect=true";
     }
-    
-    public void novo(){
+
+    public void novo() {
         objeto = new Livro();
+        abaAtiva = 0;
     }
-    
-     public void alterar(Object codigoBarras){
+
+    public void alterar(Object ISBN) {
         try {
-            objeto = dao.getObjectByID(codigoBarras);
-        } catch (Exception e){
+            objeto = dao.getObjectByID(ISBN);
+            abaAtiva = 0;
+        } catch (Exception e) {
             Util.mensagemInformacao("Erro ao recuperar objeto: " + Util.getMensagemErro(e));
         }
     }
-    
-    public void excluir(Object codigoBarras){
+
+    public void excluir(Object ISBN) {
         try {
-            objeto = dao.getObjectByID(codigoBarras);
+            objeto = dao.getObjectByID(ISBN);
             dao.remove(objeto);
             Util.mensagemInformacao("Objeto removido com sucesso!");
-        } catch (Exception e){
+        } catch (Exception e) {
             Util.mensagemInformacao("Erro ao remover objeto: " + Util.getMensagemErro(e));
         }
     }
-    
-    public void salvar(){
+
+    public void salvar() {
         try {
-            if (objeto.getCodigoBarras()== null){
+            if (objeto.getISBN() == null) {
                 dao.persist(objeto);
             } else {
                 dao.merge(objeto);
             }
             Util.mensagemInformacao("Objeto persistido com sucesso!");
-        } catch (Exception e){
+        } catch (Exception e) {
             Util.mensagemInformacao("Erro ao salvar objeto: " + Util.getMensagemErro(e));
         }
     }
@@ -120,5 +144,28 @@ public class ControleLivro implements Serializable {
         this.daoCatalogo = daoCatalogo;
     }
 
-    
+    public AutorDAO<Autor> getDaoAutor() {
+        return daoAutor;
+    }
+
+    public void setDaoAutor(AutorDAO<Autor> daoAutor) {
+        this.daoAutor = daoAutor;
+    }
+
+    public Autor getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Autor autor) {
+        this.autor = autor;
+    }
+
+    public int getAbaAtiva() {
+        return abaAtiva;
+    }
+
+    public void setAbaAtiva(int abaAtiva) {
+        this.abaAtiva = abaAtiva;
+    }
+
 }

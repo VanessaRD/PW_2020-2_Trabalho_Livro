@@ -32,4 +32,11 @@ public class LivroDAO<TIPO> extends DAOGenerico<Livro> implements Serializable {
         converterOrdem = new ConverterOrdem();
         converterOrdem.setListaOrdem(listaOrdem);
     }
+    
+     public Livro getObjectByID(Object id) throws Exception {
+        Livro obj = em.find(Livro.class, id);
+        // uso para evitar o erro de lazy inicialization exception
+        obj.getAutores().size();
+        return obj;
+    }   
 }

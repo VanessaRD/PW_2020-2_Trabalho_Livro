@@ -31,8 +31,9 @@ public class AutorDAO<TIPO> extends DAOGenerico<Autor> implements Serializable {
         converterOrdem = new ConverterOrdem();
         converterOrdem.setListaOrdem(listaOrdem);
     }
+    
     public List<Autor> getListaObjetosCompleta() {
-        String jpql = "select distinct t from Autor t join fetch t.autor order by t.id";
+        String jpql = "select distinct t from Autor t join fetch t.autores order by t.id";
         return em.createQuery(jpql).getResultList();
     }
 }

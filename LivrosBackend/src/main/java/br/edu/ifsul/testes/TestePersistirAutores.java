@@ -15,7 +15,7 @@ import javax.persistence.Persistence;
  *
  * @author Vanessa Rossi D.
  */
-public class TestePersistir_Autor_Livro {
+public class TestePersistirAutores {
     
     /**
      * @param args the command line arguments
@@ -24,9 +24,11 @@ public class TestePersistir_Autor_Livro {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("LivrosPU");
         EntityManager em = emf.createEntityManager();
         
-        Livro l = em.find(Livro.class, "1235453467");
-        Autor a = em.find(Autor.class, 1);
+        Livro l = em.find(Livro.class, "978-65-5560-195-4");
+        Autor a = em.find(Autor.class, 7);//"J.K. Rowling "
+        Autor a2 = em.find(Autor.class, 10);//"Ko Moon-younga"
         l.getAutores().add(a);
+        l.getAutores().add(a2);
         
         em.getTransaction().begin();
         em.persist(l);
