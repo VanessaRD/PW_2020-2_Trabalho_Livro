@@ -14,7 +14,7 @@ and open the template in the editor.
               modal="true" width="50%" height="100%">
         <h:form id="formEdicao" prependId="false">
             <p:growl id="growl"/>
-            <p:tabView id="tab" activeIndex="#{ControleLivraria.abaAtiva}">
+            <p:tabView id="tab" activeIndex="#{controleLivraria.abaAtiva}">
                 <p:tab title="Dados principais">
                     <div align="center">
                         <p:panelGrid columns="2">
@@ -38,33 +38,52 @@ and open the template in the editor.
                                  var="catalogo" rowIndexVar="idxCatalogo"
                                  id="listaCatalogos">
                         <f:facet name="header">
+                            <p:panelGrid columns="3">
+                                <p:outputLabel value="Catalogo"/>
+                                <p:selectOneMenu value="#{controleLivraria.catalogo}"
+                                                 id="selectCatalogoor">
+                                    <f:converter binding="#{converterCatalogo}"/>
+                                    <f:selectItem noSelectionOption="true"
+                                                  itemLabel="Selecione um registro"/>
+                                    <f:selectItems value="#{controleLivraria.daoCatalogo.listaTodos}"
+                                                   var="a" itemLabel="#{a.nome}"/>                                    
+                                </p:selectOneMenu>
+                                <p:commandButton value="Adicionar" 
+                                                 actionListener="#{controleLivraria.adicionarCatalogo()}"
+                                                 update="listaCatalogos growl"
+                                                 rendered="#{p:ifGranted('ADICIONAR')}"
+                                                 process="@this selectCatalogoor"
+                                                 icon="pi pi-plus"/>
+                            </p:panelGrid>
                             <p:commandButton value="Novo Catalogo"
                                              actionListener="#{controleLivraria.novoCatalogo()}"
                                              update=":formCatalogo"
+                                             rendered="#{p:ifGranted('ADICIONAR')}"
                                              icon="pi pi-plus"
                                              process="@this"
                                              oncomplete="PF('dlgCatalogo').show();"/>
                         </f:facet>
+                        <p:column headerText="ID">
+                            <p:outputLabel value="#{catalogo.id}"/>
+                        </p:column>
                         <p:column headerText="Nome">
                             <p:outputLabel value="#{catalogo.nome}"/>
                         </p:column>
                         <p:column headerText="Descrição">
                             <p:outputLabel value="#{catalogo.descricao}"/>
                         </p:column>
-                        <p:column headerText="Livro">
-                            <p:outputLabel value="#{catalogo.livro.titulo}"/>
-                        </p:column>  
                         <p:column headerText="Ações">
                             <div align="center">
                                 <p:commandButton 
-                                    actionListener="#{controleTime.alterarCatalogo(idxCatalogo)}"
+                                    actionListener="#{controleLivraria.alterarCatalogo(idxCatalogo)}"
                                     icon="pi pi-pencil"
                                     title="Editar"
                                     update=":formCatalogo"
                                     process="@this"
+                                    rendered="#{p:ifGranted('EDITAR')}"
                                     oncomplete="PF('dlgCatalogo').show();"/>
                                 <p:commandButton 
-                                    actionListener="#{controleTime.removerCatalogo(idxCatalogo)}"
+                                    actionListener="#{controleLivraria.removerCatalogo(idxCatalogo)}"
                                     icon="pi pi-trash"
                                     update="tab:listaCatalogos growl"
                                     process="@this"
@@ -74,8 +93,6 @@ and open the template in the editor.
                         </p:column>                        
                     </p:dataTable>
 
-
-
                 </p:tab>                
             </p:tabView>
 
@@ -83,7 +100,7 @@ and open the template in the editor.
                 <div align="center">
                     <p:commandButton value="Salvar"
                                      icon="pi pi-save"
-                                     actionListener="#{ControleLivraria.salvar()}"
+                                     actionListener="#{controleLivraria.salvar()}"
                                      update="formEdicao formListagem"
                                      oncomplete="if (!args.validationFailed){PF('dlg').hide();}"/>
                 </div>
@@ -96,7 +113,7 @@ and open the template in the editor.
         <h:form id="formCatalogo">
             <p:growl/>
             <p:panelGrid columns="2">
-                
+
                 <f:facet name="footer">
                     <div align="center">
                         <p:commandButton value="Salvar" icon="pi pi-save"
@@ -106,24 +123,17 @@ and open the template in the editor.
                                          oncomplete="if(!args.validationFailed){PF('dlgCatalogo').hide();}"/>                                         
                     </div>
                 </f:facet>
-                
+
                 <p:outputLabel value="ID"/>
                 <p:inputText value="#{ControleLivraria.catalogo.id}" readonly="true"/>
                 <p:outputLabel value="Nome" for="txtNomeCatalogo"/>
                 <p:inputText id="txtNomeCatalogo" value="#{ControleLivraria.catalogo.nome}"
                              placeholder="Obrigatório" size="50" maxlength="50"/>
-                    <p:outputLabel value="Descrição" for="txtDescricao"/>
-                    <p:inputText id="txtDescricao" value="#{controleCatalogo.objeto.descricao}"
-                                 size="50" maxlength="50" placeholder="Obrigatório"/>
-                    
-                    <!--<p:outputLabel value="Livro" for="selectLivro"/>
-                    <p:selectOneMenu id="selectLivro" value="#{ControleLivraria.catalogo.livro}">
-                        <f:converter binding="#{converterLivro}"/>
-                        <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
-                        <f:selectItems value="#{ControleLivraria.daoLivro.listaTodos}"
-                                       var="l" itemLabel="#{l.titulo}"/>                    
-                    </p:selectOneMenu> -->
-                    
+                <p:outputLabel value="Descrição" for="txtDescricao"/>
+                <p:inputText id="txtDescricao" value="#{controleLivraria.objeto.descricao}"
+                             size="50" maxlength="50" placeholder="Obrigatório"/>
+
+
             </p:panelGrid>
         </h:form>
         <ui:include src="/templates/ajaxstatus.xhtml"/>

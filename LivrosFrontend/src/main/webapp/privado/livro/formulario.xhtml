@@ -56,7 +56,7 @@ and open the template in the editor.
                             <p:column>
                                 <p:outputLabel value="Valor" for="txtValor"/> <br/>
                                 <p:inputNumber id="txtValor" value="#{controleLivro.objeto.valor}"
-                                               size="20" maxlength="10" style="width: 95%;"  required="true" />
+                                               size="20" style="width: 95%;"  required="true" decimalPlaces="2" decimalSeparator="," thousandSeparator=""/>
                                 <br/>
 
                                 <p:outputLabel value="Ativo" for="ativo"/>
@@ -141,7 +141,7 @@ and open the template in the editor.
                             <p:panelGrid columns="3">
                                 <p:outputLabel value="Autor"/>
                                 <p:selectOneMenu value="#{controleLivro.autor}"
-                                                 id="listaAutores">
+                                                 id="selectAutor">
                                     <f:converter binding="#{converterAutor}"/>
                                     <f:selectItem noSelectionOption="true"
                                                   itemLabel="Selecione um registro"/>
@@ -150,8 +150,9 @@ and open the template in the editor.
                                 </p:selectOneMenu>
                                 <p:commandButton value="Adicionar" 
                                                  actionListener="#{controleLivro.adicionarAutor()}"
-                                                 update="listaPermissoes growl"
+                                                 update="listaAutores growl"
                                                  process="@this selectAutor"
+                                                 rendered="#{p:ifGranted('ADICIONAR')}"
                                                  icon="pi pi-plus"/>
                             </p:panelGrid>
                         </f:facet>
@@ -167,6 +168,7 @@ and open the template in the editor.
                                     actionListener="#{controleLivro.removerAutor(per)}"
                                     process="@this"
                                     update="listaAutores growl" icon="pi pi-trash"
+                                    rendered="#{p:ifGranted('REMOVER')}"
                                     title="Remover autor"/>
                             </div>
                         </p:column>

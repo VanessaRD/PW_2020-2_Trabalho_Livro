@@ -39,10 +39,10 @@ public class TestePersistirLivro {
         l1.setValor(45.99);
         /* Livro Basico */
         /* O ISBN (International Standard Book Number/ Padrão Internacional de Numeração de Livro) */
-        l1.setISBN("978-65-5560-195-4");
-        l1.setTitulo("O menino que se alimentava de pesadelos");
-        l1.setResumo("Em Criança zumbi, um menino de pele muito pálida e olhos bem grandes nasceu num pequeno vilarejo.");
-        l1.setEditora("It’s Okay to Not Be Okay");
+        l1.setISBN("444-65-5560-195-3");
+        l1.setTitulo("O menino TESTE");
+        l1.setResumo("Em tsdgg zumbTESTjo.");
+        l1.setEditora("It’s TERER Okay");
         l1.setDataPublicacao(Calendar.getInstance());//"14/01/2021"
 
         //Autor a = em.find(Autor.class, 1);

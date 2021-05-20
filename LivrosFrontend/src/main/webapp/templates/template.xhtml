@@ -17,7 +17,7 @@
                             url="#{facesContext.externalContext.requestContextPath}/index.xhtml"
                             icon="pi pi-home"/>
 
-                <p:submenu label="Cadastros" class="w3-padding-large" rendered="#{controleLogin.usuarioAutenticado != null}">
+                <p:submenu label="Cadastros" class="w3-padding-large" rendered="#{controleLogin.usuarioAutenticado != null and p:ifGranted('ACESSAR')}">
                     <p:column style="min-width: 15em;">
                         <p:submenu label="Básicos" style="min-width: 15em;">
                             <p:menuitem action="#{controleAutor.listar()}"

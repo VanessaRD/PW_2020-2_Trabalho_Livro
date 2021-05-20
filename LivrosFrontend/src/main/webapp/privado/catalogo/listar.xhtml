@@ -16,6 +16,7 @@
                                  icon="pi pi-plus"
                                  update="formEdicao"
                                  process="@this"
+                                 rendered="#{p:ifGranted('ADICIONAR')}"
                                  oncomplete="PF('dlg').show();"/>
                 <div align="center">
                     <p:panelGrid columns="11">
@@ -80,21 +81,65 @@
                                              icon="pi pi-pencil"
                                              title="Editar"
                                              update="formEdicao"
+                                             rendered="#{p:ifGranted('EDITAR')}"
                                              process="@this"
                                              oncomplete="PF('dlg').show();"/>
                             <p:commandButton actionListener="#{controleCatalogo.excluir(obj.id)}"
                                              icon="pi pi-trash"
                                              update="@form"
+                                             rendered="#{p:ifGranted('REMOVER')}"
                                              process="@this"
-                                             rendered="#{p:ifGranted('ADMINISTRADOR')}"
                                              onclick="if (!confirm('Confirma a exclusão'))
                                                          return false"/>
                         </div>
                     </p:column>
                 </p:dataTable>
             </h:form>
+            
+            <p:dialog header="Edição" widgetVar="dlg" resizable="false"
+                      modal="true" width="50%" height="100%">
+                <h:form id="formEdicao" prependId="false">
+                    <p:growl/>
+                    <div align="center">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="ID"/>
+                            <p:inputText validator="#{controleCatalogo.objeto.id}"
+                                         size="5" readonly="true"/>
+                            <p:outputLabel value="Nome" for="txtNome"/>
+                            <p:inputText id="txtNome" value="#{controleCatalogo.objeto.nome}"
+                                         size="50" maxlength="50"
+                                         placeholder="Obrigatório"/>
+                             <p:outputLabel value="Descrição" for="txtDescricao"/>
+                            <p:inputText id="txtDescricao" value="#{controleCatalogo.objeto.descricao}"
+                                         size="50" maxlength="50"
+                                         placeholder="Obrigatório"/>
+                            <p:outputLabel value="Livraria" for="selectLivraria"/>
+                            <p:selectOneMenu value="#{controleCatalogo.objeto.livraria}"
+                                             id="selectLivraria"
+                                             filter="true"
+                                             filterMatchMode="startsWith">
+                                <f:selectItem noSelectionOption="true"
+                                              itemLabel="Selecione um registro"/>
+                                <f:converter binding="#{converterLivraria}"/>
+                                <f:selectItems value="#{controleCatalogo.daoLivraria.listaTodos}"
+                                               var="est" itemLabel="#{est.nome}"/>
+                            </p:selectOneMenu>
 
-            <ui:include src="formulario.xhtml"/>
+                        </p:panelGrid>
+                    </div>
+                    <p:panel>
+                        <div align="center">
+                            <p:commandButton value="Salvar"
+                                             icon="pi pi-save"
+                                             actionListener="#{controleCatalogo.salvar()}"
+                                             update="formEdicao formListagem"
+                                             oncomplete="if (!args.validationFailed){PF('dlg').hide();}"/>
+                        </div>
+                    </p:panel>
+                </h:form>
+            </p:dialog>
+
+            <!-- <ui:include src="formulario.xhtml"/> -->
 
         </ui:define>
     </ui:composition>

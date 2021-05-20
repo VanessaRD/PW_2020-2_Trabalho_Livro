@@ -15,6 +15,7 @@
                                  actionListener="#{controleFormato.novo()}"
                                  icon="pi pi-plus"
                                  update="formEdicao"
+                                 rendered="#{p:ifGranted('ADICIONAR')}"
                                  process="@this"
                                  oncomplete="PF('dlg').show();"/>
                 <div align="center">
@@ -71,13 +72,14 @@
                                              icon="pi pi-pencil"
                                              title="Editar"
                                              update="formEdicao"
+                                             rendered="#{p:ifGranted('EDITAR')}"
                                              process="@this"
                                              oncomplete="PF('dlg').show();"/>
                             <p:commandButton actionListener="#{controleFormato.excluir(obj.id)}"
                                              icon="pi pi-trash"
                                              update="@form"
                                              process="@this"
-                                             rendered="#{p:ifGranted('ADMINISTRADOR')}"
+                                             rendered="#{p:ifGranted('REMOVER')}"
                                              onclick="if (!confirm('Confirma a exclusão'))
                                                          return false"/>
                         </div>

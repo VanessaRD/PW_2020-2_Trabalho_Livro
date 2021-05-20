@@ -62,7 +62,7 @@ public class FabricaObjetos {
         //c.setLivros();
         
         l1.setCatalogo(c);
-        c.getLivros().add(l1);
+        //c.getLivros().add(l1);
         
         
         l.getCatalogos().add(c);

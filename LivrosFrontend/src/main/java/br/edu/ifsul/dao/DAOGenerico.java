@@ -105,22 +105,22 @@ public class DAOGenerico<TIPO> implements Serializable {
             return "Nenhum registro encontrado";
         }
     }
-
+    @RolesAllowed({"ADMINISTRADOR", "ACESSAR"})
     public List<TIPO> getListaTodos() {
         String jpql = "from " + classePersistente.getSimpleName()
                 + " order by " + ordemAtual.getAtributo();
         return em.createQuery(jpql).getResultList();
     }
-
+    @RolesAllowed({"ADMINISTRADOR", "ADICIONAR"})
     public void persist(TIPO obj) throws Exception {
         em.persist(obj);
     }
-
+    @RolesAllowed({"ADMINISTRADOR", "EDITAR"})
     public void merge(TIPO obj) throws Exception {
         em.merge(obj);
     }
 
-    @RolesAllowed("ADMINISTRADOR")
+    @RolesAllowed({"ADMINISTRADOR", "REMOVER"})
     public void remove(TIPO obj) throws Exception {
         obj = em.merge(obj);
         em.remove(obj);

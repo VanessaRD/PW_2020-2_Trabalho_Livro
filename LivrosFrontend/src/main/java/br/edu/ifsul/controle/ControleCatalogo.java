@@ -28,19 +28,23 @@ public class ControleCatalogo implements Serializable {
     @EJB
     private CatalogoDAO<Catalogo> dao;
     private Catalogo objeto;
-    
+
     @EJB
     private LivrariaDAO<Livraria> daoLivraria;
-    
-    @EJB
+
+    /*@EJB
     private LivroDAO<Livro> daoLivro;
     private Livro livro;
+    private int abaAtiva;
+    private Livro livro;
+    private Boolean novoLivro;*/
     private int abaAtiva;
 
     public ControleCatalogo() {
 
     }
-    
+
+    /*
     public void removerLivro(Livro obj) {
         objeto.getLivros().remove(obj);
         Util.mensagemInformacao("Livro removido com sucesso!");
@@ -54,6 +58,28 @@ public class ControleCatalogo implements Serializable {
             Util.mensagemErro("Catalogo já possui este livro");
         }
     }
+
+    public void novoLivro() {
+        livro = new Livro();
+        novoLivro = true;
+    }
+
+    public void alterarLivro(int index) {
+        livro = objeto.getLivros().get(index);
+        novoLivro = false;
+    }
+
+    public void salvarLivro() {
+        if (novoLivro) {
+            objeto.adicionarLivro(livro);
+        }
+        Util.mensagemInformacao("Livro adicionado ou alterado com sucesso!");
+    }
+
+    public void removerLivro(int index) {
+        objeto.removerLivro(index);
+        Util.mensagemInformacao("Livro removido com sucesso!");
+    } */
 
     public String listar() {
         return "/privado/catalogo/listar?faces-redirect=true";
@@ -83,15 +109,15 @@ public class ControleCatalogo implements Serializable {
         }
     }
 
-    public void salvar(){
+    public void salvar() {
         try {
-            if (objeto.getId() == null){
+            if (objeto.getId() == null) {
                 dao.persist(objeto);
             } else {
                 dao.merge(objeto);
             }
             Util.mensagemInformacao("Objeto persistido com sucesso!");
-        } catch (Exception e){
+        } catch (Exception e) {
             Util.mensagemInformacao("Erro ao salvar objeto: " + Util.getMensagemErro(e));
         }
     }
@@ -111,13 +137,13 @@ public class ControleCatalogo implements Serializable {
     public void setObjeto(Catalogo objeto) {
         this.objeto = objeto;
     }
-
-    public LivroDAO<Livro> getDaoLivro() {
-        return daoLivro;
+/*
+    public Boolean getNovoLivro() {
+        return novoLivro;
     }
 
-    public void setDaoLivro(LivroDAO<Livro> daoLivro) {
-        this.daoLivro = daoLivro;
+    public void setNovoLivro(Boolean novoLivro) {
+        this.novoLivro = novoLivro;
     }
 
     public Livro getLivro() {
@@ -126,7 +152,7 @@ public class ControleCatalogo implements Serializable {
 
     public void setLivro(Livro livro) {
         this.livro = livro;
-    }
+    } */
 
     public int getAbaAtiva() {
         return abaAtiva;

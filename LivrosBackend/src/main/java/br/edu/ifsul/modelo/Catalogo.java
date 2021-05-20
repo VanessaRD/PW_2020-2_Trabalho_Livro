@@ -45,16 +45,25 @@ public class Catalogo implements Serializable {
     @Column(name = "descricao", columnDefinition = "text", nullable = false, length = 80)
     private String descricao;
 
-    @OneToMany(mappedBy = "catalogo")
-    private List<Livro> livros;
-
-    @NotNull(message = "A livraria deve ser informado")
+    /* @OneToMany(mappedBy = "catalogo")
+    private List<Livro> livros;*/
+    //@NotNull(message = "A livraria deve ser informado")
     @ManyToOne
     @JoinColumn(name = "livraria_id", referencedColumnName = "id", nullable = false)
     private Livraria livraria;
 
     public Catalogo() {
     }
+
+    /*
+    public void adicionarLivro(Livro obj) {
+        obj.setCatalogo(this);
+        this.livros.add(obj);
+    }
+
+    public void removerLivro(int index) {
+        this.livros.remove(index);
+    } */
 
     public Integer getId() {
         return id;
@@ -88,13 +97,14 @@ public class Catalogo implements Serializable {
         this.livraria = livraria;
     }
 
+    /*  
     public List<Livro> getLivros() {
         return livros;
     }
 
     public void setLivros(List<Livro> livros) {
         this.livros = livros;
-    }
+    } */
 
     @Override
     public int hashCode() {

@@ -15,6 +15,7 @@
                                  actionListener="#{controleLivro.novo()}"
                                  icon="pi pi-plus"
                                  update="formEdicao"
+                                 rendered="#{p:ifGranted('ADICIONAR')}"
                                  process="@this"
                                  oncomplete="PF('dlg').show();"/>
                 <div align="center">
@@ -59,9 +60,6 @@
                     <f:facet name="footer">
                         <p:outputLabel value="#{controleLivro.dao.mensagemNavegacao}"/>
                     </f:facet>  
-                    <p:column headerText="Codigo de Barras">
-                        <p:outputLabel value="#{obj.codigoBarras}"/>
-                    </p:column>
                     <p:column headerText="ISBN">
                         <p:outputLabel value="#{obj.ISBN}"/>
                     </p:column>  
@@ -71,17 +69,13 @@
                     <p:column headerText="Resumo">
                         <p:outputLabel value="#{obj.resumo}"/>
                     </p:column>  
-                    <p:column headerText="Numero de Paginas">
-                        <p:outputLabel value="#{obj.numeroPaginas}"/>
-                    </p:column>     
-                    <p:column headerText="Valor">
-                        <p:outputLabel value="#{obj.valor}"/>
-                    </p:column>
                     <p:column headerText="Editora">
                         <p:outputLabel value="#{obj.editora}"/>
                     </p:column>
                     <p:column headerText="Data Publicação">
-                        <h:outputText value="#{obj.dataPublicacao}" />
+                        <h:outputText value="#{obj.dataPublicacao}" >
+                            <f:converter converterId="converterCalendar"/>
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="Ativo">
                         <h:outputText value="#{obj.ativo ? 'Sim' : 'Não'}" />
@@ -101,13 +95,14 @@
                                              icon="pi pi-pencil"
                                              title="Editar"
                                              update="formEdicao"
+                                             rendered="#{p:ifGranted('EDITAR')}"
                                              process="@this"
                                              oncomplete="PF('dlg').show();"/>
                             <p:commandButton actionListener="#{controleLivro.excluir(obj.ISBN)}"
                                              icon="pi pi-trash"
                                              update="@form"
                                              process="@this"
-                                             rendered="#{p:ifGranted('ADMINISTRADOR')}"
+                                             rendered="#{p:ifGranted('REMOVER')}"
                                              onclick="if (!confirm('Confirma a exclusão'))
                                                          return false"/>
                         </div>

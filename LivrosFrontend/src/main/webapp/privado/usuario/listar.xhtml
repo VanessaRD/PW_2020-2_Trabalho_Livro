@@ -20,6 +20,7 @@ and open the template in the editor.
                                  icon="pi pi-plus"
                                  update="formEdicao"
                                  process="@this"
+                                 rendered="#{p:ifGranted('ADICIONAR')}"
                                  oncomplete="PF('dlg').show();"/>
                 <div align="center">
                     <p:panelGrid columns="11">
@@ -78,12 +79,14 @@ and open the template in the editor.
                                              icon="pi pi-pencil"
                                              title="Editar"
                                              update="formEdicao"
+                                             rendered="#{p:ifGranted('EDITAR')}"
                                              process="@this"
                                              oncomplete="PF('dlg').show();"/>
                             <p:commandButton actionListener="#{controleUsuario.excluir(obj.nomeUsuario)}"
                                              icon="pi pi-trash"
                                              update="@form"
                                              process="@this"
+                                             rendered="#{p:ifGranted('REMOVER')}"
                                              onclick="if (!confirm('Confirma a exclusão'))
                                                          return false"/>
                         </div>

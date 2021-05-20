@@ -35,7 +35,7 @@ public class ControleAutor implements Serializable {
     
     public void imprimeAutores(){
         HashMap parametros = new HashMap();
-        UtilRelatorios.imprimeRelatorio("relatoriosAutores", parametros, dao.getListaObjetosCompleta());
+        UtilRelatorios.imprimeRelatorio("relatorioAutores", parametros, dao.getListaObjetosCompleta());
     }
     
     public void imprimeAutor(Object id) {
@@ -44,7 +44,7 @@ public class ControleAutor implements Serializable {
             List<Autor> lista = new ArrayList<>();
             lista.add(objeto);
             HashMap parametros = new HashMap();
-            UtilRelatorios.imprimeRelatorio("relatoriosAutores", parametros, lista);
+            UtilRelatorios.imprimeRelatorio("relatorioAutores", parametros, lista);
         } catch (Exception e) {
             Util.mensagemInformacao("Erro ao imprimir: " + Util.getMensagemErro(e));
         }

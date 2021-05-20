@@ -40,6 +40,10 @@
         <auth-constraint>
             <role-name>ADMINISTRADOR</role-name>
             <role-name>USUARIO</role-name>
+            <role-name>ACESSAR</role-name>
+            <role-name>EDITAR</role-name>
+            <role-name>REMOVER</role-name>
+            <role-name>ADICIONAR</role-name>
         </auth-constraint>
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
@@ -74,6 +78,22 @@
     <security-role>
         <description>usuario</description>
         <role-name>USUARIO</role-name>
+    </security-role>
+    <security-role>
+        <description>acessar</description>
+        <role-name>ACESSAR</role-name>
+    </security-role>
+    <security-role>
+        <description>editar</description>
+        <role-name>EDITAR</role-name>
+    </security-role>
+    <security-role>
+        <description>remover</description>
+        <role-name>REMOVER</role-name>
+    </security-role>
+    <security-role>
+        <description>adicionar</description>
+        <role-name>ADICIONAR</role-name>
     </security-role>
 
 </web-app>

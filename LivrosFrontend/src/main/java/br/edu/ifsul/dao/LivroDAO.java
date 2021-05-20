@@ -8,6 +8,7 @@ package br.edu.ifsul.dao;
 import br.edu.ifsul.conversores.ConverterOrdem;
 import br.edu.ifsul.modelo.Livro;
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.Stateful;
 
 /**
@@ -16,13 +17,13 @@ import javax.ejb.Stateful;
  */
 @Stateful
 public class LivroDAO<TIPO> extends DAOGenerico<Livro> implements Serializable {
-     
-    public LivroDAO(){
+
+    public LivroDAO() {
         super();
         classePersistente = Livro.class;
-         // definir as ordens possíveis
-        listaOrdem.add(new Ordem("id", "ID", "="));
-        listaOrdem.add(new Ordem("nome", "Nome", "like"));
+        // definir as ordens possíveis
+        listaOrdem.add(new Ordem("ISBN", "ISBN", "="));
+        listaOrdem.add(new Ordem("titulo", "Titulo", "like"));
         listaOrdem.add(new Ordem("formato.nome", "Formato", "like"));
         listaOrdem.add(new Ordem("idioma.nome", "Idioma", "like"));
         listaOrdem.add(new Ordem("catalogo.nome", "Catalogo", "like"));
@@ -32,11 +33,16 @@ public class LivroDAO<TIPO> extends DAOGenerico<Livro> implements Serializable {
         converterOrdem = new ConverterOrdem();
         converterOrdem.setListaOrdem(listaOrdem);
     }
-    
-     public Livro getObjectByID(Object id) throws Exception {
-        Livro obj = em.find(Livro.class, id);
+
+    public Livro getObjectByID(Object ISBN) throws Exception {
+        Livro obj = em.find(Livro.class, ISBN);
         // uso para evitar o erro de lazy inicialization exception
         obj.getAutores().size();
         return obj;
-    }   
+    }
+    
+      public void remover(Livro obj) throws Exception {
+        obj = em.find(Livro.class, obj.getISBN());
+        em.remove(obj);
+    } 
 }

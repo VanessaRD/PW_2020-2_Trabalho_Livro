@@ -1,0 +1,44 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 17, 2021, 9:56:58 PM
+    Author     : vaneh
+*/
+
+html,body{
+    background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 98%;
+}
+
+.container{
+    height: 100%;
+    align-content: center;
+}
+
+.form-group{
+    margin: 8px;
+}
+
+.card{
+    height: 220px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(15, 102, 94, 0.5) !important;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2),0 4px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 10px;
+}
+
+.card-header h3{
+    color: white;
+}
+
+label{
+    color: white;
+    margin-right: 10px;
+}
